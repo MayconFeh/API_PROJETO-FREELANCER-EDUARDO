@@ -4,9 +4,11 @@ from django.utils import timezone
 
 
 class InfoSerializer(serializers.ModelSerializer):
+    visualizado = serializers.BooleanField(default=False)  # Novo campo
+
     class Meta:
         model = Info
-        fields = ('id', 'nome', 'endereco', 'area_de_atuacao', 'telefone', 'pdf', 'created_at', 'updated_at', 'deleted_at', 'is_deleted')
+        fields = ('id', 'nome', 'endereco', 'area_de_atuacao', 'telefone', 'pdf', 'created_at', 'updated_at', 'deleted_at', 'is_deleted', 'visualizado')
         read_only_fields = ('id', 'created_at', 'updated_at', 'deleted_at', 'is_deleted')
         extra_kwargs = {
             'pdf': {'required': True},

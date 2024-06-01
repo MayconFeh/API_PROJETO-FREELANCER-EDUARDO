@@ -1,7 +1,7 @@
 from django.db import models
 import uuid
 from django.utils import timezone
-from activitys import Activity
+from activitys.models import Activity
 
 
 class Info(models.Model):
@@ -15,6 +15,7 @@ class Info(models.Model):
     updated_at = models.DateTimeField(default=timezone.now)
     deleted_at = models.DateTimeField(null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
+    visualizado = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.pk:
