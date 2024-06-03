@@ -1,10 +1,14 @@
 from rest_framework import serializers
-from .models import Info
 from django.utils import timezone
+from .models import Info
 
 
 class InfoSerializer(serializers.ModelSerializer):
-    visualizado = serializers.BooleanField(default=False)  # Novo campo
+    area_de_atuacao = serializers.SerializerMethodField()
+    visualizado = serializers.BooleanField(default=False)
+
+    def get_area_de_atuacao(self, obj):
+        return obj.activity.area_de_atuacao if obj.activity else None
 
     class Meta:
         model = Info
@@ -24,8 +28,3 @@ class InfoSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         validated_data['updated_at'] = timezone.now()
         return super().update(instance, validated_data)
-
-    def delete(self, instance):
-        instance.deleted_at = timezone.now()
-        instance.is_deleted = True
-        instance.save()
