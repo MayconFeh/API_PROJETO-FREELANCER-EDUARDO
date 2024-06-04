@@ -3,7 +3,6 @@ from .serializers import UserSerializer
 from .models import User
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsAuthenticatedAndAdminOrOwner
 
 
 @extend_schema_view(
@@ -45,5 +44,5 @@ class UserListCreateView(ListCreateAPIView):
 class UserRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated, IsAuthenticatedAndAdminOrOwner]
+    permission_classes = [IsAuthenticated]
     lookup_field = 'id'

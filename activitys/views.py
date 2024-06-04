@@ -1,6 +1,5 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
-from users.permissions import IsAuthenticatedAndAdminOrOwner
 from .models import Activity
 from .serializers import ActivitySerializer
 from drf_spectacular.utils import extend_schema, extend_schema_view
@@ -23,7 +22,7 @@ from django.utils import timezone
 class ActivityListCreateView(ListCreateAPIView):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
-    permission_classes = [IsAuthenticated, IsAuthenticatedAndAdminOrOwner]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save()
@@ -50,7 +49,7 @@ class ActivityListCreateView(ListCreateAPIView):
 class ActivityRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
-    permission_classes = [IsAuthenticated, IsAuthenticatedAndAdminOrOwner]
+    permission_classes = [IsAuthenticated]
     lookup_field = 'id'
 
     def get_object(self):

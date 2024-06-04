@@ -4,7 +4,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from .models import Info
 from .serializers import InfoSerializer
-from users.permissions import IsAuthenticatedAndAdminOrOwner
 from django.utils import timezone
 
 
@@ -24,7 +23,6 @@ from django.utils import timezone
 class InfoListCreateView(generics.ListCreateAPIView):
     queryset = Info.objects.all()
     serializer_class = InfoSerializer
-    permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['area_de_atuacao', 'is_deleted']
     search_fields = ['nome', 'endereco', 'area_de_atuacao', 'telefone']
@@ -55,7 +53,7 @@ class InfoListCreateView(generics.ListCreateAPIView):
 class InfoRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Info.objects.all()
     serializer_class = InfoSerializer
-    permission_classes = [IsAuthenticated, IsAuthenticatedAndAdminOrOwner]
+    permission_classes = [IsAuthenticated]
     lookup_field = 'id'
 
     def perform_update(self, serializer):
